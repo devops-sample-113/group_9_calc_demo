@@ -9,7 +9,7 @@ class CalculatorApp(ft.Container):
         super().__init__()
         self.reset()
 
-        self.result = ft.Text(value="0", color=ft.Colors.WHITE, size=20)
+        self.result = ft.Text(value="0", color=ft.Colors.BLUE, size=20)
 
         self.bgcolor = ft.Colors.BLACK
         self.border_radius = ft.border_radius.all(20)
@@ -22,6 +22,14 @@ class CalculatorApp(ft.Container):
     def ui(self):
         ui = ft.Column(
             controls=[
+                ft.Row(
+                    expand=True,
+                    controls=[ ActionButton(
+                            text="!",
+                            button_clicked=self.button_clicked,
+                            action="sml",
+                        ),],
+                    alignment="end"),
                 ft.Row(
                     expand=True,
                     controls=[self.result],
@@ -172,6 +180,18 @@ class CalculatorApp(ft.Container):
                 )
             )
             self.reset()
+        elif action == "backspace":
+            self.result.value = self.result.value[:-1]
+            if self.result.value =="":
+                self.result.value="0"
+        elif action=="sml":
+            temp = int(self.result.value)
+            temp2=1
+            
+            for i in range(1,temp+1):
+                temp2*=i
+            self.result.value=str(temp2)
+
         else:
             raise ValueError("Invalid action")
 

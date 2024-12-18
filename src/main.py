@@ -1,3 +1,4 @@
+import math
 import flet as ft
 from calculate import Calculator
 from buttons import DigitButton, OperatorButton, ActionButton
@@ -114,6 +115,10 @@ class CalculatorApp(ft.Container):
                             text="⌫", button_clicked=self.button_clicked, action="backspace"),
                         ActionButton(
                             text="=", button_clicked=self.button_clicked, action="calculate"),
+                        ActionButton(
+                            text="x²", button_clicked=self.button_clicked, action="square"),
+                        ActionButton(
+                            text="log", button_clicked=self.button_clicked, action="log")
                     ]
                 ),
             ]
@@ -187,6 +192,25 @@ class CalculatorApp(ft.Container):
                 self.result.value *= -1
                 self.result.value = str(self.result.value) 
             self.reset()
+        elif action == "backspace":
+            self.result.value = self.result.value[:-1]
+            if self.result.value == "":
+                self.result.value = "0"
+        elif action == "square":
+            self.result.value = str(
+                self.format_number(
+                    float(self.result.value)**2
+                )
+            )
+        elif action == "log":
+            try:
+                value = float(self.result.value)
+                if value <= 0:
+                    self.result.value = "Error"
+                else:
+                    self.result.value = str(self.format_number(math.log10(value)))
+            except ValueError:
+                self.result.value = "Error"
         else:
             raise ValueError("Invalid action")
 

@@ -30,6 +30,20 @@ class TestCalculator(unittest.TestCase):
         result = self.calculator.calculate(10, 5, "unknown")
         self.assertEqual(result, "Invalid operator")
 
+    def test_square(self):
+        result = self.calculator.calculate(4, 0, "square")
+        self.assertEqual(result, 16)
+
+    def test_log(self):
+        result = self.calculator.calculate(100, 0, "log")
+        self.assertEqual(result, 2)
+
+    def test_log_zero_or_negative(self):
+        result = self.calculator.calculate(0, 0, "log")
+        self.assertEqual(result, "Error")
+
+        result = self.calculator.calculate(-10, 0, "log")
+        self.assertEqual(result, "Error")
 
 if __name__ == "__main__":
     unittest.main()

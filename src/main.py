@@ -30,6 +30,16 @@ class CalculatorApp(ft.Container):
                 ft.Row(
                     expand=True,
                     controls=[
+                        ActionButton(
+                            text="| |",
+                            button_clicked=self.button_clicked,
+                            action="absolute",
+                        ),
+                    ]
+                ),
+                ft.Row(
+                    expand=True,
+                    controls=[
 
                         ActionButton(
                             text="AC",
@@ -176,6 +186,11 @@ class CalculatorApp(ft.Container):
                     self.operand1, float(self.result.value), self.operator
                 )
             )
+            self.reset()
+        elif action == "absolute":
+            if int(self.result.value) < 0:
+                self.result.value *= -1
+                self.result.value = str(self.result.value) 
             self.reset()
         elif action == "backspace":
             self.result.value = self.result.value[:-1]

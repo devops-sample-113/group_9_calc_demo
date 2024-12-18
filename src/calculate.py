@@ -1,10 +1,14 @@
+import math
+
+
 class Calculator:
     def __init__(self):
         self.operations = {
             "add": self.add,
             "sub": self.subtract,
             "mul": self.multiply,
-            "div": self.divide,
+            "square": self.square,
+            "log": self.log,
         }
 
     def calculate(self, operand1, operand2, operator):
@@ -36,9 +40,20 @@ class Calculator:
 
         return x / y
 
+    def square(self, x, y):
+        return x ** 2
+
+    def log(self, x, y):
+        if x <= 0:
+            raise ValueError("Error: Logarithm undefined for zero or negative numbers!")
+        return math.log10(x)
+
 
 
 if __name__ == "__main__":
     calculator = Calculator()
     print(calculator.calculate(10, 5, "+"))  # 15
     print(calculator.calculate(10, 0, "/"))  # Error: Can not divide by zero!
+    print(calculator.calculate(4, 0, "square"))  # 16
+    print(calculator.calculate(100, 0, "log"))  # 2
+    print(calculator.calculate(-1, 0, "log"))

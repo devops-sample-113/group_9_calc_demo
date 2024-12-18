@@ -1,4 +1,5 @@
 import flet as ft
+import math
 from calculate import Calculator
 from buttons import DigitButton, OperatorButton, ActionButton
 
@@ -26,6 +27,16 @@ class CalculatorApp(ft.Container):
                     expand=True,
                     controls=[self.result],
                     alignment="end"),
+                ft.Row(
+                    expand=True,
+                    controls=[
+                         ActionButton(
+                            text="sqrt", button_clicked=self.button_clicked, action="sqrt"),
+                        ActionButton(
+                            text="∛", button_clicked=self.button_clicked, action="sqrt3"),
+                        
+                    ]
+                ),
                 ft.Row(
                     expand=True,
                     controls=[
@@ -104,6 +115,7 @@ class CalculatorApp(ft.Container):
                             text="⌫", button_clicked=self.button_clicked, action="backspace"),
                         ActionButton(
                             text="=", button_clicked=self.button_clicked, action="calculate"),
+                       
                     ]
                 ),
             ]
@@ -171,6 +183,33 @@ class CalculatorApp(ft.Container):
                     self.operand1, float(self.result.value), self.operator
                 )
             )
+            self.reset()
+        elif action == "sqrt":  # Handle square root action
+            try:
+                value = float(self.result.value)
+                if value < 0:
+                    self.result.value = "Error"  # Handle negative square root
+                else:
+                    self.result.value = str(
+                        self.format_number(math.sqrt(value))
+                    )
+            except ValueError:
+                self.result.value = "Error"
+        elif action == "sqrt3":  # Handle square root action
+            try:
+                value = float(self.result.value)
+                if value < 0:
+                    self.result.value = "Error"  # Handle negative square root
+                else:
+                    self.result.value = str(
+                        self.format_number(math.pow(value,1/3))
+                    )
+            except ValueError:
+                self.result.value = "Error"
+        elif action == "backspace":
+            self.result.value = self.result.value[:-1]
+            if self.result.value == "":
+                self.result.value = "0"
             self.reset()
         else:
             raise ValueError("Invalid action")
